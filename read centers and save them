@@ -1,0 +1,26 @@
+D='C:\Users\张硕\Documents\MATLAB\Examples\R2020a\images\No.3_folder-training';
+S=dir(fullfile(D,'*.jpg'));
+for k=1:numel(S)
+   F=fullfile(D,S(k).name);
+   I=imread(F);
+   imshow(I)
+   rgb=I;
+   imshow(rgb)
+g=rgb(:,:,2);imshow(g)
+r=rgb(:,:,1);imshow(r)
+imshow(r)
+% binize the image
+bw=im2bw(r);imshow(bw)
+bw=~bw;
+bw=bwareaopen(bw,60);imshow(bw)
+% find out centers
+stats=regionprops(bw);
+stats=regionprops(bw,'all');
+[centers,radii]=imfindcircles(bw,[6 20]);
+%write centers data into txt files
+fid=fopen('J.txt','w');
+fprintf(fid,'%f',centers);
+fclose(fid);
+d=datestr(now,'YYYY/mm/dd HH:MM:SS:FFF');
+movefile('J.txt','d');
+end
