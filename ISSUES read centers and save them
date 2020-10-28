@@ -1,0 +1,51 @@
+formatOut = 'YYYY/mm/dd HH:MM';
+d=datestr(now, formatOut)
+baseFileName = sprintf('M.txt', d)
+fullFileName = fullfile('M.txt', baseFileName);
+
+%write centers data into txt files
+fid=fopen('J.txt','w');
+fprintf(fid,'%f',centers);
+fclose(fid);
+d=datestr(now,'YYYY/mm/dd HH:MM:SS:FFF');
+movefile('J.txt','d');
+
+%order the files by datetime(正确code)
+Path ='C:\Users\张硕\Documents\MATLAB\No.4 test_delete_afteruse'; 
+listing = dir(fullfile(Path,'*.txt'));
+B={listing.name};
+B = sort( B);
+%draw in the figure\\\\problem:single point can't draw lines
+fileID = fopen('J.txt');
+C = textscan(fileID,'%f %f');
+fclose(fileID);
+whos C
+x=C(1,1);
+y=C(1,2);
+figure
+plot(x,y)
+错误使用 plot
+输入参数的数目不足。
+
+%try to do a circle with 'for'
+Path ='C:\Users\张硕\Documents\MATLAB\No.4 test_delete_afteruse'; 
+S = dir(fullfile(Path,'*.txt'));
+for k=1:numel(S)
+   F=fullfile(Path,S(k).name);
+   fileID = fopen(F);
+C = textscan(fileID,'%f %f');
+fclose(fileID);
+whos C;
+%single point can't draw lines in matlab so setting up a (x1,y1)
+x1=0;
+y1=0;
+x2=C(1,1);
+y2=C(1,2);
+figure
+hold on
+x=[x1,x2];
+y=[y1,y2];
+plot(x,y)
+end
+错误使用 plot
+输入参数的数目不足。
