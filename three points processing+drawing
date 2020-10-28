@@ -1,0 +1,32 @@
+D='C:\Users\张硕\Documents\MATLAB\Examples\R2020a\images\no.1 folder';
+S=dir(fullfile(D,'*.jpg')); 
+for k=1:numel(S)
+   F=fullfile(D,S(k).name);
+   I=imread(F);
+   imshow(I)
+   rgb=I;
+   imshow(rgb)
+g=rgb(:,:,2);imshow(g)
+r=rgb(:,:,1);imshow(r)
+imshow(r)
+% binize the image
+bw=im2bw(r);imshow(bw)
+bw=~bw;
+bw=bwareaopen(bw,60);imshow(bw)
+% find out centers
+stats=regionprops(bw);
+stats=regionprops(bw,'all');
+[centers,radii]=imfindcircles(bw,[6 20]);
+figure
+hold on
+x1=centers(1,1);
+x2=centers(2,1);
+x3=centers(3,1);
+y1=centers(1,2);
+y2=centers(2,2);
+y3=centers(3,2);
+x=[x1,x2,x3];
+y=[y1,y2,y3];
+plot(x,y)
+hold off
+end
